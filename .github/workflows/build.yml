@@ -36,16 +36,16 @@ jobs:
         uses: android-actions/setup-android@v4
         with:
           cmdline-tools-version: '15859902'
+          accept-android-sdk-licenses: 'true'
           packages: ''
 
       - name: Install Android SDK packages
         shell: bash
         run: |
-          set -euxo pipefail
+          set -eux
           echo "ANDROID_HOME=$ANDROID_HOME"
           echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT"
-          yes | sdkmanager --licenses >/dev/null
-          sdkmanager --install \
+          sdkmanager --sdk_root="$ANDROID_SDK_ROOT" --install \
             "platform-tools" \
             "platforms;android-${ANDROID_COMPILE_SDK}" \
             "build-tools;${ANDROID_BUILD_TOOLS}" \

@@ -33,9 +33,10 @@ jobs:
           gradle-version: '8.5'
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
         with:
-          cmdline-tools-version: '11076708'
+          cmdline-tools-version: '15859902'
+          packages: ''
 
       - name: Install Android SDK packages
         shell: bash

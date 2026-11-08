@@ -36,19 +36,20 @@ jobs:
         uses: android-actions/setup-android@v3
         with:
           cmdline-tools-version: 'latest'
-          packages: |
-            platform-tools
-            platforms;android-${{ env.ANDROID_COMPILE_SDK }}
-            build-tools;${{ env.ANDROID_BUILD_TOOLS }}
-            ndk;${{ env.ANDROID_NDK_VERSION }}
-            cmake;${{ env.ANDROID_CMAKE_VERSION }}
 
-      - name: Accept Android SDK licenses
+      - name: Install Android SDK packages
         shell: bash
         run: |
+          set -euxo pipefail
           echo "ANDROID_HOME=$ANDROID_HOME"
           echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT"
           yes | sdkmanager --licenses >/dev/null
+          sdkmanager --install \
+            "platform-tools" \
+            "platforms;android-${ANDROID_COMPILE_SDK}" \
+            "build-tools;${ANDROID_BUILD_TOOLS}" \
+            "ndk;${ANDROID_NDK_VERSION}" \
+            "cmake;${ANDROID_CMAKE_VERSION}"
 
       - name: Export Android SDK env
         shell: bash
